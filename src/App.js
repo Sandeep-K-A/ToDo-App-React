@@ -1,7 +1,12 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
-
+import { useState } from "react";
 function App() {
+  const [toDos, setTodos] = useState([]);
+  const [toDo, setTodo] = useState('');
+  const currentDate = new Date();
+  const currentDay = currentDate.getDay();
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   return (
     <div className="app">
       <div className="mainHeading">
@@ -9,22 +14,29 @@ function App() {
       </div>
       <div className="subHeading">
         <br />
-        <h2>Whoop, it's Wednesday 🌝 ☕ </h2>
+        <h2>Hey, it's {daysOfWeek[currentDay]} 🌝 ☕ </h2>
       </div>
       <div className="input">
-        <input type="text" placeholder="🖊️ Add item..." />
-        <i className="fas fa-plus"></i>
+        <input value={toDo} onChange={(event) => setTodo(event.target.value)} type="text" placeholder="🖊️ Add item..." />
+        <i onClick={() => setTodos([...toDos, { text: toDo, status: false }])} className="fas fa-plus"></i>
       </div>
       <div className="todos">
-        <div className="todo">
-          <div className="left">
-            <input type="checkbox" name="" id="" />
-            <p>Rect tutorial</p>
-          </div>
-          <div className="right">
-            <i className="fas fa-times"></i>
-          </div>
-        </div>
+        {
+          toDos.map((value) => {
+
+            return (<div className="todo">
+              <div className="left">
+                <input value={value.status} type="checkbox" name="" id="" />
+                <p>{value.text}</p>
+              </div>
+              <div className="right">
+                <i className="fas fa-times"></i>
+              </div>
+            </div>)
+
+          })
+        }
+
       </div>
     </div>
   );
