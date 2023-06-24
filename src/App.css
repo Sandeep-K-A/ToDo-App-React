@@ -85,3 +85,7 @@ h2 {
   font-style: normal;
   color: grey;
 }
+
+.crossed-out {
+  text-decoration: line-through;
+}

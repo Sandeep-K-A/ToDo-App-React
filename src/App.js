@@ -18,16 +18,32 @@ function App() {
       </div>
       <div className="input">
         <input value={toDo} onChange={(event) => setTodo(event.target.value)} type="text" placeholder="🖊️ Add item..." />
-        <i onClick={() => setTodos([...toDos, { text: toDo, status: false }])} className="fas fa-plus"></i>
+        <i onClick={() => {
+          if (toDo === "") {
+
+          } else {
+            setTodos([...toDos, { id: Date.now(), text: toDo, status: false }])
+            setTodo('')
+          }
+        }} className="fas fa-plus"></i>
       </div>
       <div className="todos">
         {
-          toDos.map((value) => {
+          toDos.map((obj, index) => {
 
-            return (<div className="todo">
+            return (<div className="todo" key={index}>
               <div className="left">
-                <input value={value.status} type="checkbox" name="" id="" />
-                <p>{value.text}</p>
+                <input onChange={(event) => {
+                  console.log(event.target.checked)
+                  setTodos(toDos.filter(obj2 => {
+                    if (obj2.id === obj.id) {
+                      obj2.status = event.target.checked;
+                    }
+                    return obj2
+                  }))
+                  console.log(obj)
+                }} value={obj.status} type="checkbox" name="" id="" />
+                <p>{obj.text}</p>
               </div>
               <div className="right">
                 <i className="fas fa-times"></i>
